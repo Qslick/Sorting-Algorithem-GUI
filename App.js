@@ -127,15 +127,7 @@ class App extends React.Component {
   }
 
   produceSortedList() {
-    let oldList = [1, 2, 3, 4, 5];
-    let newList = [5, 1, 2, 3, 4];
-    this.stringToColor(String(this.dataList));
-
-
-    //        console.log("oldList" + oldList);
-    //        console.log("newList" + newList);
-    //        console.log("difference: " + JSON.stringify(differenceArray));
-
+      
 
 
   }
@@ -174,108 +166,163 @@ class App extends React.Component {
     this.setState((state, props) => ({
       update: state.update + 1
     }));
-
   }
 
 
   mergeSort() {
     console.log("Merge Sort");
-      
-      var unsortedArr = this.state.dataList;
 
-function merge(leftArr, rightArr) {
-var sortedArr = [];
-  while (leftArr.length && rightArr.length) {
-    if (leftArr[0] <= rightArr[0]) {
-      sortedArr.push(leftArr[0]);
-      leftArr = leftArr.slice(1)
-   } else {
-      sortedArr.push(rightArr[0]);
-      rightArr = rightArr.slice(1)
-     }
-   }
-  while (leftArr.length)
-    sortedArr.push(leftArr.shift());
-  while (rightArr.length)
-    sortedArr.push(rightArr.shift());
-  return sortedArr;
-}
-function mergesort(arr) {
-  if (arr.length < 2) {
-    return arr; }
-  else {
-    var midpoint = parseInt(arr.length / 2);
-    var leftArr   = arr.slice(0, midpoint);
-    var rightArr  = arr.slice(midpoint, arr.length);
-    return merge(mergesort(leftArr), mergesort(rightArr));
-  }
-}
-console.log('This should be the sorted array!')
-console.log(mergesort(unsortedArr));
-      this.setState((state, props) => ({
-          dataList: mergesort(state.dataList)
-      }));
+    var unsortedArr = this.state.dataList;
+
+    function merge(leftArr, rightArr) {
+      var sortedArr = [];
+      while (leftArr.length && rightArr.length) {
+        if (leftArr[0] <= rightArr[0]) {
+          sortedArr.push(leftArr[0]);
+          leftArr = leftArr.slice(1)
+        } else {
+          sortedArr.push(rightArr[0]);
+          rightArr = rightArr.slice(1)
+        }
+      }
+      while (leftArr.length)
+        sortedArr.push(leftArr.shift());
+      while (rightArr.length)
+        sortedArr.push(rightArr.shift());
+      return sortedArr;
+    }
+    function mergesort(arr) {
+      if (arr.length < 2) {
+        return arr;
+      }
+      else {
+        var midpoint = parseInt(arr.length / 2);
+        var leftArr = arr.slice(0, midpoint);
+        var rightArr = arr.slice(midpoint, arr.length);
+        return merge(mergesort(leftArr), mergesort(rightArr));
+      }
+    }
+    console.log('This should be the sorted array!')
+    console.log(mergesort(unsortedArr));
       
+    this.setState((state, props) => ({
+      dataList: mergesort(state.dataList)
+    }));
+
   }
 
   quickSort() {
     console.log("Quick Sort");
-      
-      function sort(arr, left, right){
-   var len = arr.length, 
-   pivot,
-   partitionIndex;
 
+    function sort(arr, left, right) {
+      var len = arr.length,
+        pivot,
+        partitionIndex;
 
-  if(left < right){
-    pivot = right;
-    partitionIndex = partition(arr, pivot, left, right);
-    
-   //sort left and right
-   sort(arr, left, partitionIndex - 1);
-   sort(arr, partitionIndex + 1, right);
-  }
-  return arr;
-}
-    
-      
-function partition(arr, pivot, left, right){
-   var pivotValue = arr[pivot],
-       partitionIndex = left;
+      if (left < right) {
+        pivot = right;
+        partitionIndex = partition(arr, pivot, left, right);
 
-   for(var i = left; i < right; i++){
-    if(arr[i] < pivotValue){
-      swap(arr, i, partitionIndex);
-      partitionIndex++;
+        //sort left and right
+        sort(arr, left, partitionIndex - 1);
+        sort(arr, partitionIndex + 1, right);
+      }
+      return arr;
     }
-  }
-  swap(arr, right, partitionIndex);
-  return partitionIndex;
-}
-      
-      function swap(arr, i, j){
-   var temp = arr[i];
-   arr[i] = arr[j];
-   arr[j] = temp;
-}
-      let unsortedList = this.state.dataList;
-      let left = unsortedList[0];
-      let right = unsortedList[unsortedList.length-1];
-      
-      console.log("unsortedList: " + unsortedList);
-      console.log("left: " + left);
-      console.log("right: " + right);
-      let sortedList = sort(unsortedList, left, right);
-      console.log("Sorted Quick Sort Array: " + sortedList);
-      this.setState((state, props) => ({
-          dataList: sortedList
-      }));
-  }
+
+
+    function partition(arr, pivot, left, right) {
+      var pivotValue = arr[pivot],
+        partitionIndex = left;
+
+      for (var i = left; i < right; i++) {
+        if (arr[i] < pivotValue) {
+          swap(arr, i, partitionIndex);
+          partitionIndex++;
+        }
+      }
+      swap(arr, right, partitionIndex);
+      return partitionIndex;
+    }
+
+    function swap(arr, i, j) {
+      var temp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = temp;
+    }
+    let unsortedList = this.state.dataList;
+    let left = unsortedList[0];
+    let right = unsortedList[unsortedList.length - 1];
+
+    console.log("unsortedList: " + unsortedList);
+    console.log("left: " + left);
+    console.log("right: " + right);
+    let sortedList = sort(unsortedList, left, right);
+    console.log("Sorted Quick Sort Array: " + sortedList);
+    this.setState((state, props) => ({
+      dataList: sortedList
+    }));
+  } 
 
   insertionSort() {
     console.log("Insertion Sort");
 
+function binarySearch (arr, start, len, element) {
+    if (len == 1) {
+        if (element < arr[start]) {
+            return start;
+        } else {
+            return start + 1;
+        }
+    } else {
+        var splitPoint = start + Math.floor(len / 2);
+        if (element < arr[splitPoint]) {
+            return binarySearch(arr, start, splitPoint - start, element);
+        } else {
+            return binarySearch(arr, splitPoint, start + len - splitPoint, element);
+        }
+    }
+}
+
+function insert (arr, len, element, index) {
+    for (var i = len; i > index; i--) {
+        arr[i] = arr[i - 1];
+    }
+    arr[index] = element;
+}
+
+function binaryInsertionSort (arr) {
+    for (var p = 1; p < arr.length; p++) {
+        var i = binarySearch(arr, 0, p, arr[p]);
+        insert(arr, p, arr[p], i);
+    }
+    return arr;''
+}
+
+    let unsortedList = this.state.dataList;
+      console.log("unsortedList: " + unsortedList);
+    let sortedList = binaryInsertionSort(unsortedList);
+
+    this.setState((state, props) => ({
+      dataList: binaryInsertionSort(state.dataList)
+    }));
+    //    let sortedList = binaryInsertionSort([1, 5, 2, 4, 3]);
+    console.log("Sorted Insertion Sort: " + sortedList);
   }
+    
+    step(){
+        console.log("Step");
+        let oldList = [1,2,3,5,4];
+        let newList = [1,2,3,4,5];
+        let indexChanged = {}
+        
+        
+        oldList.forEach((item, index) => {
+            if(item != newList[index]){
+                indexChanged.push()
+            }
+        })
+    }
 
 
   render(event) {
@@ -284,7 +331,7 @@ function partition(arr, pivot, left, right){
       <div style={app} >
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <div style={list_container} id="list_to_sort">
-            <h2>{this.state.dataList}</h2>
+             
             <ul style={list}>
               {this.state.dataList.map((num, index) => {
                 return <div key={index} style={{ height: this.state.blockHeights[index], backgroundColor: this.state.blockColors[index], margin: 15 }}>
@@ -310,6 +357,7 @@ function partition(arr, pivot, left, right){
 
           <button style={button} onClick={this.produceRandomList.bind(this)}>Random</button>
           <button style={button} onClick={this.produceSortedList.bind(this)}>Sorted</button>
+            <button style={button} onClick={this.step.bind(this)}>Step</button>
 
           <input type="text2"
             value={this.state.inputData}
